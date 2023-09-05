@@ -1,0 +1,9 @@
+name: AC1058Addon
+main: cn.ariacraft.bw1058addons.BedWars1058Addons
+version: 1.0
+author: FootClicker, YukiEnd
+load: STARTUP
+
+depend:
+  - BedWars1058
+
