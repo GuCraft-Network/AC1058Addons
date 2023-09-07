@@ -70,7 +70,7 @@ public class BedWars1058Addons extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SpongePlaceListener(), this); // 海绵动画
         getServer().getPluginManager().registerEvents(new WaterWorkerHelmet(), this); // 水下呼吸头盔
         getServer().getPluginManager().registerEvents(new LevelBar(), this); // 等级条
-        getServer().getPluginManager().registerEvents(new OnGameEnd(), this); // 游戏结束后再来一局消息
+        getServer().getPluginManager().registerEvents(new OnGameEnd(), this); // 游戏结束后再来一局点击消息
         getServer().getPluginManager().registerEvents(new onEndAllowFlying(), this); // 游戏结束后允许飞行
         getServer().getPluginManager().registerEvents(new GAStateListener(), this); // 定时公告
         getServer().getPluginManager().registerEvents(new AFKListener(), this); // AFK检查
