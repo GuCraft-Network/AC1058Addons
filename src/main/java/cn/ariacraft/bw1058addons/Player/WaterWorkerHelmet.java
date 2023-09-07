@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class WaterWorkerHelmet implements Listener {
@@ -29,12 +30,27 @@ public class WaterWorkerHelmet implements Listener {
     }
 
     private void setPlayerHelmet(Player player, ITeam team) {
+        ItemStack phelmet = player.getEquipment().getHelmet();
+        int PLevel = 0;
+        if (phelmet != null) {
+            ItemMeta pmeta = phelmet.getItemMeta();
+            if (pmeta.hasEnchant(Enchantment.PROTECTION_ENVIRONMENTAL)) {
+                PLevel = pmeta.getEnchantLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
+            }
+        }
+
         ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
         LeatherArmorMeta meta = (LeatherArmorMeta) helmet.getItemMeta();
         meta.addEnchant(Enchantment.WATER_WORKER, 1, true);
+
+        if (PLevel != 0) {
+            meta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, PLevel, true);
+        }
+
         meta.setColor(team.getColor().bukkitColor());
         meta.spigot().setUnbreakable(true);
         helmet.setItemMeta(meta);
         player.getEquipment().setHelmet(helmet);
     }
+
 }
