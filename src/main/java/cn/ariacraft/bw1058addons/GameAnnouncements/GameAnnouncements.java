@@ -9,8 +9,8 @@ import org.bukkit.scheduler.BukkitTask;
 public class GameAnnouncements {
 
     public static final String[] announcements = {
-            "§c§l如果你断开连接，可在起床大厅中输入/rejoin重新加入游戏。",
-            "§c§l禁止队伍联合！使用/report举报违规玩家。",
+            "§c§l如果你断开连接，可以在起床大厅中使用/rejoin重新加入游戏。",
+            "§c§l禁止队伍联合！使用/report举报违规队伍联合玩家。",
     };
 
     public static BukkitTask task;
