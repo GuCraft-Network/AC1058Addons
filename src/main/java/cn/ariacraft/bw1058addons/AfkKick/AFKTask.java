@@ -18,27 +18,29 @@ public class AFKTask implements Listener {
 
     public static BukkitTask afkTask;
 
-    public static void startAFKCheck() {
+    public static void startAFKCheck(IArena arena) {
         afkTask = Bukkit.getScheduler().runTaskTimerAsynchronously(BedWars1058Addons.getInstance(), () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                long lastMoveTime = getLastMoveTime(player);
-                if (lastMoveTime == 0) {
-                    continue; // 玩家第一次加入服务器时不计算挂机时间
-                }
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastMoveTime >= afkTime * 1000L) {
-                    if (currentTime - lastMoveTime >= kickTime * 1000L) {
-                        Bukkit.getScheduler().runTaskLater(BedWars1058Addons.getInstance(), () -> {
-                            player.sendMessage(ChatColor.valueOf(Arena.getArenaByPlayer(player).getTeam(player).getColor().toString()) + player.getDisplayName() + "§7因挂机离开了游戏。");
-                            player.kickPlayer("§c§l你因挂机超过180秒而被移出。");
-                        }, 20L);
-                    } else if (currentTime - lastMoveTime >= 2 * 60 * 1000 && currentTime - lastMoveTime < 3 * 60 * 1000) {
-                        final String warningMessage = "§c你将因挂机而被移出游戏。";
-                        player.sendMessage(warningMessage);
-                        for (int i = 0; i < 10; i++) {
-                            final int seconds = i * 2;
-                            Bukkit.getScheduler().runTaskLaterAsynchronously(BedWars1058Addons.getInstance(),
-                                    () -> player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F), seconds * 2L);
+            for (Player player : arena.getPlayers()) {
+                if (player != null && arena.isPlayer(player)) {
+                    long lastMoveTime = getLastMoveTime(player);
+                    if (lastMoveTime == 0) {
+                        continue; // 玩家第一次加入服务器时不计算挂机时间
+                    }
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastMoveTime >= afkTime * 1000L) {
+                        if (currentTime - lastMoveTime >= kickTime * 1000L) {
+                            Bukkit.getScheduler().runTaskLater(BedWars1058Addons.getInstance(), () -> {
+                                player.sendMessage(ChatColor.valueOf(Arena.getArenaByPlayer(player).getTeam(player).getColor().toString()) + player.getDisplayName() + "§7因挂机离开了游戏。");
+                                player.kickPlayer("§c§l你因挂机超过180秒而被移出。");
+                            }, 20L);
+                        } else if (currentTime - lastMoveTime >= 2 * 60 * 1000 && currentTime - lastMoveTime < 3 * 60 * 1000) {
+                            final String warningMessage = "§c你将因挂机而被移出游戏。";
+                            player.sendMessage(warningMessage);
+                            for (int i = 0; i < 10; i++) {
+                                final int seconds = i * 2;
+                                Bukkit.getScheduler().runTaskLaterAsynchronously(BedWars1058Addons.getInstance(),
+                                        () -> player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 1.0F), seconds * 2L);
+                            }
                         }
                     }
                 }

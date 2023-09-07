@@ -16,7 +16,7 @@ public class GameAnnouncements {
     public static BukkitTask task;
     public static int currentAnnouncement = 0;
 
-    public static void startAnnouncements() {
+    public static void startAnnouncements(IArena arena) {
         task = Bukkit.getScheduler().runTaskTimerAsynchronously(BedWars1058Addons.getInstance(), () -> {
             currentAnnouncement++;
 
@@ -24,8 +24,10 @@ public class GameAnnouncements {
                 currentAnnouncement = 0;
             }
 
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                p.sendMessage(announcements[currentAnnouncement]);
+            for (Player p : arena.getPlayers()) {
+                if (p != null && arena.isPlayer(p)) {
+                    p.sendMessage(announcements[currentAnnouncement]);
+                }
             }
         }, 25L * 60, 25L * 60 * 2);
     }

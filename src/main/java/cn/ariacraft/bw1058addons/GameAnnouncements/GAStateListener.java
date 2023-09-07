@@ -11,12 +11,14 @@ public class GAStateListener implements Listener {
     @EventHandler
     private void onStart(GameStateChangeEvent e) {
         if (e.getNewState() == GameState.playing) {
-            GameAnnouncements.startAnnouncements();
+            GameAnnouncements.startAnnouncements(e.getArena());
         }
     }
 
     @EventHandler
     private void onEnd(GameEndEvent e) {
-        GameAnnouncements.task.cancel();
+        if (GameAnnouncements.task != null) {
+            GameAnnouncements.task.cancel();
+        }
     }
 }

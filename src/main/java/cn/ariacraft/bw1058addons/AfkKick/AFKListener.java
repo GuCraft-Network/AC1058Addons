@@ -5,6 +5,7 @@ import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.events.gameplay.GameEndEvent;
 import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
+import com.andrei1058.bedwars.api.events.player.PlayerReJoinEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -26,18 +27,36 @@ public class AFKListener implements org.bukkit.event.Listener {
             for (Player p : event.getArena().getPlayers()) {
                 p.setMetadata("lastMoveTime", new FixedMetadataValue(BedWars1058Addons.plugin, System.currentTimeMillis()));
             }
-            AFKTask.startAFKCheck();
+            AFKTask.startAFKCheck(event.getArena());
+        }
+    }
+
+    @EventHandler
+    public void onRejoin(PlayerReJoinEvent event) {
+        Player player = event.getPlayer();
+        if (AFKTask.afkTask != null) {
+            player.setMetadata("lastMoveTime", new FixedMetadataValue(BedWars1058Addons.plugin, System.currentTimeMillis()));
         }
     }
 
     @EventHandler
     public void onPlayerLeaveArena(PlayerLeaveArenaEvent event) {
         Player player = event.getPlayer();
-        player.removeMetadata("lastMoveTime", BedWars1058Addons.plugin);
+        if (AFKTask.afkTask != null) {
+            player.removeMetadata("lastMoveTime", BedWars1058Addons.plugin);
+        }
     }
 
     @EventHandler
     public void onEnd(GameEndEvent event) {
-        AFKTask.afkTask.cancel();
+        if (AFKTask.afkTask != null) {
+            for (Player p : event.getArena().getPlayers()) {
+                p.removeMetadata("lastMoveTime", BedWars1058Addons.plugin);
+            }
+            for (Player p : event.getArena().getSpectators()) {
+                p.removeMetadata("lastMoveTime", BedWars1058Addons.plugin);
+            }
+            AFKTask.afkTask.cancel();
+        }
     }
 }
