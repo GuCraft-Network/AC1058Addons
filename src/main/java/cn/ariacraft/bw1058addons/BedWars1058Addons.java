@@ -21,8 +21,10 @@ import cn.ariacraft.bw1058addons.SpongeAnimation.Particle.versions.Older;
 import cn.ariacraft.bw1058addons.SpongeAnimation.SpongePlaceListener;
 import com.andrei1058.bedwars.BedWars;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
@@ -100,12 +102,13 @@ public class BedWars1058Addons extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (GameAnnouncements.isAnnouncementsRunning()) {
-            GameAnnouncements.cancelAnnouncements();
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (AFKTask.isAfkTaskRunning(p)) {
+                AFKTask.cancelAfkTask(p);
+            }
         }
-        if (AFKTask.isAfkTaskRunning()) {
-            AFKTask.cancelAfkTask();
-        }
+        GameAnnouncements.cancelAnnouncements();
+
         removePlayerdata.remove();
         getLogger().info(ChatColor.LIGHT_PURPLE + "————————AriaCraft————————");
         getLogger().info(ChatColor.GREEN + "插件已关闭");

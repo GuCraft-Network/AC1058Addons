@@ -6,40 +6,56 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-public class GameAnnouncements {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+public class GameAnnouncements {
     public static final String[] announcements = {
             "§c§l如果你断开连接，可以在起床大厅中使用/rejoin重新加入游戏。",
             "§c§l禁止队伍联合！使用/report举报违规队伍联合玩家。",
     };
 
-    private static BukkitTask task;
     private static int currentAnnouncement = 0;
 
+    private static Map<Player, BukkitTask> tasks = new HashMap<>();
+
     public static void startAnnouncements(IArena arena) {
-        task = Bukkit.getScheduler().runTaskTimerAsynchronously(BedWars1058Addons.getInstance(), () -> {
-            if (currentAnnouncement >= announcements.length) {
-                currentAnnouncement = 0;
-            }
+        List<Player> players = new ArrayList<>(arena.getPlayers());
 
-            for (Player p : arena.getPlayers()) {
-                if (arena.getPlayers() == null) task.cancel();
-                if (p != null && arena.isPlayer(p)) {
-                    p.sendMessage(announcements[currentAnnouncement]);
+        for (Player player : players) {
+            BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(BedWars1058Addons.getInstance(), () -> {
+                if (player == null) {
+                    cancelAnnouncement(player);
+                    return;
                 }
-            }
 
-            currentAnnouncement++;
-        }, 25L * 60, 25L * 60 * 2);
+                if (currentAnnouncement >= announcements.length) {
+                    currentAnnouncement = 0;
+                }
+
+                player.sendMessage(announcements[currentAnnouncement]);
+
+                currentAnnouncement++;
+            }, 25L * 60, 25L * 60 * 2);
+
+            tasks.put(player, task);
+        }
     }
 
-    public static boolean isAnnouncementsRunning() {
-        return task != null;
+    public static void cancelAnnouncement(Player player) {
+        if (tasks.containsKey(player)) {
+            BukkitTask task = tasks.get(player);
+            task.cancel();
+            tasks.remove(player);
+        }
     }
 
     public static void cancelAnnouncements() {
-        if (task != null) {
+        for (BukkitTask task : tasks.values()) {
             task.cancel();
         }
+        tasks.clear();
     }
 }
