@@ -10,7 +10,7 @@ public class onEndAllowFlying implements Listener {
     @EventHandler
     public void onEnd(GameEndEvent e) {
         for (Player p : e.getArena().getPlayers()) {
-            p.setFlying(true);
+            p.setAllowFlight(true);
         }
     }
 }
