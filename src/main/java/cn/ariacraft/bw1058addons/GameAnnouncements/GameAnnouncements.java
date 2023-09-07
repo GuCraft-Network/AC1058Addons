@@ -23,6 +23,7 @@ public class GameAnnouncements {
             }
 
             for (Player p : arena.getPlayers()) {
+                if (arena.getPlayers() == null) task.cancel();
                 if (p != null && arena.isPlayer(p)) {
                     p.sendMessage(announcements[currentAnnouncement]);
                 }

@@ -26,6 +26,9 @@ public class AFKTask implements Listener {
             @Override
             public void run() {
                 for (Player player : arena.getPlayers()) {
+                    if (arena.getPlayers() == null) {
+                        this.cancel();
+                    }
                     if (player != null && arena.isPlayer(player)) {
                         long lastMoveTime = getLastMoveTime(player);
                         if (lastMoveTime == 0) {
