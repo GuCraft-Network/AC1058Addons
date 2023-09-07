@@ -100,11 +100,11 @@ public class BedWars1058Addons extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (GameAnnouncements.task != null) {
-            GameAnnouncements.task.cancel();
+        if (GameAnnouncements.isAnnouncementsRunning()) {
+            GameAnnouncements.cancelAnnouncements();
         }
-        if (AFKTask.afkTask != null) {
-            AFKTask.afkTask.cancel();
+        if (AFKTask.isAfkTaskRunning()) {
+            AFKTask.cancelAfkTask();
         }
         removePlayerdata.remove();
         getLogger().info(ChatColor.LIGHT_PURPLE + "————————AriaCraft————————");

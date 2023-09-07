@@ -13,13 +13,11 @@ public class GameAnnouncements {
             "§c§l禁止队伍联合！使用/report举报违规队伍联合玩家。",
     };
 
-    public static BukkitTask task;
-    public static int currentAnnouncement = 0;
+    private static BukkitTask task;
+    private static int currentAnnouncement = 0;
 
     public static void startAnnouncements(IArena arena) {
         task = Bukkit.getScheduler().runTaskTimerAsynchronously(BedWars1058Addons.getInstance(), () -> {
-            currentAnnouncement++;
-
             if (currentAnnouncement >= announcements.length) {
                 currentAnnouncement = 0;
             }
@@ -29,6 +27,18 @@ public class GameAnnouncements {
                     p.sendMessage(announcements[currentAnnouncement]);
                 }
             }
+
+            currentAnnouncement++;
         }, 25L * 60, 25L * 60 * 2);
+    }
+
+    public static boolean isAnnouncementsRunning() {
+        return task != null;
+    }
+
+    public static void cancelAnnouncements() {
+        if (task != null) {
+            task.cancel();
+        }
     }
 }

@@ -9,16 +9,14 @@ import org.bukkit.event.Listener;
 public class GAStateListener implements Listener {
 
     @EventHandler
-    private void onStart(GameStateChangeEvent e) {
-        if (e.getNewState() == GameState.playing) {
-            GameAnnouncements.startAnnouncements(e.getArena());
+    private void onGameStart(GameStateChangeEvent event) {
+        if (event.getNewState() == GameState.playing) {
+            GameAnnouncements.startAnnouncements(event.getArena());
         }
     }
 
     @EventHandler
-    private void onEnd(GameEndEvent e) {
-        if (GameAnnouncements.task != null) {
-            GameAnnouncements.task.cancel();
-        }
+    private void onGameEnd(GameEndEvent event) {
+        GameAnnouncements.cancelAnnouncements();
     }
 }
