@@ -3,6 +3,7 @@ package cn.ariacraft.bw1058addons.AfkKick;
 import cn.ariacraft.bw1058addons.BedWars1058Addons;
 import com.andrei1058.bedwars.api.arena.IArena;
 import com.andrei1058.bedwars.arena.Arena;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -38,9 +39,13 @@ public class AFKTask implements Listener {
                     long currentTime = System.currentTimeMillis();
                     if (currentTime - lastMoveTime >= TimeUnit.SECONDS.toMillis(AFK_TIME)) {
                         if (currentTime - lastMoveTime >= TimeUnit.SECONDS.toMillis(KICK_TIME)) {
-                            player.sendMessage(ChatColor.valueOf(Arena.getArenaByPlayer(player).getTeam(player).getColor().toString()) + player.getDisplayName() + "§7因挂机离开了游戏。");
-                            player.kickPlayer("§c§l你因挂机超过180秒而被移出。");
-                            cancelAfkTask(player);
+                            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                                if (Arena.getArenaByPlayer(player).getTeam(player) != null) {
+                                    player.sendMessage(ChatColor.valueOf(Arena.getArenaByPlayer(player).getTeam(player).getColor().toString()) + player.getDisplayName() + "§7因挂机离开了游戏。");
+                                    player.kickPlayer("§c§l你因挂机超过180秒而被移出。");
+                                    cancelAfkTask(player);
+                                }
+                            }, 10L);
                         } else if (currentTime - lastMoveTime >= TimeUnit.MINUTES.toMillis(2) && currentTime - lastMoveTime < TimeUnit.MINUTES.toMillis(3)) {
                             final String warningMessage = "§c你将因挂机而被移出游戏。";
                             player.sendMessage(warningMessage);

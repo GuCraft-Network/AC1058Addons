@@ -1,9 +1,6 @@
 package cn.ariacraft.bw1058addons;
 
-import cn.ariacraft.bw1058addons.AdminCommand.ForceJoin;
-import cn.ariacraft.bw1058addons.AdminCommand.NextEvent;
-import cn.ariacraft.bw1058addons.AdminCommand.SetBed;
-import cn.ariacraft.bw1058addons.AdminCommand.SkipEvent;
+import cn.ariacraft.bw1058addons.AdminCommand.*;
 import cn.ariacraft.bw1058addons.AfkKick.AFKListener;
 import cn.ariacraft.bw1058addons.AfkKick.AFKTask;
 import cn.ariacraft.bw1058addons.BugFix.ExplosionFix.ExplosionFix;
@@ -76,6 +73,7 @@ public class BedWars1058Addons extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onEndAllowFlying(), this); // 游戏结束后允许飞行
         getServer().getPluginManager().registerEvents(new GAStateListener(), this); // 定时公告
         getServer().getPluginManager().registerEvents(new AFKListener(), this); // AFK检查
+        getServer().getPluginManager().registerEvents(new onGameEndRestart(), this); // 在游戏结束时重启游戏
         registerCommand(); //注册指令
 
 
@@ -93,7 +91,8 @@ public class BedWars1058Addons extends JavaPlugin {
                 new ForceJoin(),
                 new NextEvent(),
                 new SkipEvent(),
-                new SetBed()).forEach(this::registerCommand);
+                new SetBed(),
+                new onGameEndRestart()).forEach(this::registerCommand);
     }
 
     private void registerCommand(final Command cmd) {
