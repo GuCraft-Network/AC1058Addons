@@ -22,12 +22,10 @@ public class GameAnnouncements {
     private static Map<Player, BukkitTask> tasks = new HashMap<>();
 
     public static void startAnnouncements(IArena arena) {
-        List<Player> players = new ArrayList<>(arena.getPlayers());
-
+        Player[] players = arena.getPlayers().toArray(new Player[0]);
         for (Player player : players) {
             BukkitTask task = Bukkit.getScheduler().runTaskTimerAsynchronously(BedWars1058Addons.getInstance(), () -> {
                 if (player == null) {
-                    cancelAnnouncement(player);
                     return;
                 }
 
