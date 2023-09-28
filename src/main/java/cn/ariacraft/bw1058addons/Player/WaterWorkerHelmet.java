@@ -20,13 +20,13 @@ public class WaterWorkerHelmet implements Listener {
     @EventHandler
     public void onGameStart(GameStateChangeEvent e) {
         if (e.getNewState().equals(GameState.playing)) {
-            Bukkit.getScheduler().runTaskLater(BedWars1058Addons.getInstance(), () -> e.getArena().getPlayers().forEach((p) -> this.setPlayerHelmet(p, e.getArena().getTeam(p))), 1L);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(BedWars1058Addons.getInstance(), () -> e.getArena().getPlayers().forEach((p) -> this.setPlayerHelmet(p, e.getArena().getTeam(p))), 1L);
         }
     }
 
     @EventHandler
     public void onRespawn(PlayerReSpawnEvent e) {
-        Bukkit.getScheduler().runTaskLater(BedWars1058Addons.getInstance(), () -> this.setPlayerHelmet(e.getPlayer(), e.getTeam()), 1L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(BedWars1058Addons.getInstance(), () -> this.setPlayerHelmet(e.getPlayer(), e.getTeam()), 1L);
     }
 
     private void setPlayerHelmet(Player player, ITeam team) {
