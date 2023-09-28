@@ -1,17 +1,14 @@
 package cn.ariacraft.bw1058addons;
 
 import cn.ariacraft.bw1058addons.AdminCommand.*;
-import cn.ariacraft.bw1058addons.AfkKick.AFKListener;
-import cn.ariacraft.bw1058addons.AfkKick.AFKTask;
+import cn.ariacraft.bw1058addons.AfkKick.AfkListener;
+import cn.ariacraft.bw1058addons.AfkKick.AfkTask;
 import cn.ariacraft.bw1058addons.BugFix.ExplosionFix.ExplosionFix;
 import cn.ariacraft.bw1058addons.BugFix.SharpSwordFix.SharpSwordFix;
-import cn.ariacraft.bw1058addons.GameAnnouncements.GAStateListener;
+import cn.ariacraft.bw1058addons.GameAnnouncements.GAListener;
 import cn.ariacraft.bw1058addons.GameAnnouncements.GameAnnouncements;
-import cn.ariacraft.bw1058addons.PlayAgain.OnGameEnd;
-import cn.ariacraft.bw1058addons.PlayAgain.PlayAgainCommand;
 import cn.ariacraft.bw1058addons.Player.LevelBar;
 import cn.ariacraft.bw1058addons.Player.WaterWorkerHelmet;
-import cn.ariacraft.bw1058addons.Player.onEndAllowFlying;
 import cn.ariacraft.bw1058addons.SpectatorSettings.SpectatorSettings;
 import cn.ariacraft.bw1058addons.SpongeAnimation.Particle.ParticleSupport;
 import cn.ariacraft.bw1058addons.SpongeAnimation.Particle.versions.Older;
@@ -69,10 +66,8 @@ public class BedWars1058Addons extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SpongePlaceListener(), this); // 海绵动画
         getServer().getPluginManager().registerEvents(new WaterWorkerHelmet(), this); // 水下呼吸头盔
         getServer().getPluginManager().registerEvents(new LevelBar(), this); // 等级条
-        getServer().getPluginManager().registerEvents(new OnGameEnd(), this); // 游戏结束后再来一局点击消息
-        getServer().getPluginManager().registerEvents(new onEndAllowFlying(), this); // 游戏结束后允许飞行
-        getServer().getPluginManager().registerEvents(new GAStateListener(), this); // 定时公告
-        getServer().getPluginManager().registerEvents(new AFKListener(), this); // AFK检查
+        getServer().getPluginManager().registerEvents(new GAListener(), this); // 定时公告
+        getServer().getPluginManager().registerEvents(new AfkListener(), this); // AFK检查
         getServer().getPluginManager().registerEvents(new onGameEndRestart(), this); // 在游戏结束时重启游戏
         registerCommand(); //注册指令
 
@@ -87,7 +82,6 @@ public class BedWars1058Addons extends JavaPlugin {
     void registerCommand() {
         Arrays.asList(
                 new SpectatorSettings(),
-                new PlayAgainCommand(),
                 new ForceJoin(),
                 new NextEvent(),
                 new SkipEvent(),
@@ -101,13 +95,8 @@ public class BedWars1058Addons extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (AFKTask.isAfkTaskRunning(p)) {
-                AFKTask.cancelAfkTask(p);
-            }
-        }
-        GameAnnouncements.cancelAnnouncements();
-
+        AfkTask.cancelAllTasks();
+        GameAnnouncements.cancelAllAnnouncements();
         removePlayerdata.remove();
         getLogger().info(ChatColor.LIGHT_PURPLE + "————————AriaCraft————————");
         getLogger().info(ChatColor.GREEN + "插件已关闭");

@@ -6,17 +6,17 @@ import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-public class GAStateListener implements Listener {
+public class GAListener implements Listener {
 
     @EventHandler
     private void onGameStart(GameStateChangeEvent event) {
         if (event.getNewState() == GameState.playing) {
-            GameAnnouncements.startAnnouncements(event.getArena());
+            GameAnnouncements.startAnnouncements(event.getArena().getWorld());
         }
     }
 
     @EventHandler
     private void onGameEnd(GameEndEvent event) {
-        GameAnnouncements.cancelAnnouncements();
+        GameAnnouncements.cancelAnnouncements(event.getArena().getWorld());
     }
 }

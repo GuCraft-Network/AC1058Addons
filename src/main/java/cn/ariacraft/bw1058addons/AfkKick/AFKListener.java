@@ -1,66 +1,34 @@
 package cn.ariacraft.bw1058addons.AfkKick;
 
-import cn.ariacraft.bw1058addons.BedWars1058Addons;
 import com.andrei1058.bedwars.api.arena.GameState;
 import com.andrei1058.bedwars.api.events.gameplay.GameEndEvent;
 import com.andrei1058.bedwars.api.events.gameplay.GameStateChangeEvent;
+import com.andrei1058.bedwars.api.events.player.PlayerJoinArenaEvent;
 import com.andrei1058.bedwars.api.events.player.PlayerLeaveArenaEvent;
-import com.andrei1058.bedwars.api.events.player.PlayerReJoinEvent;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.metadata.FixedMetadataValue;
 
+import static cn.ariacraft.bw1058addons.AfkKick.AfkTask.afkPlayers;
+import static cn.ariacraft.bw1058addons.AfkKick.AfkTask.kickTasks;
 
-public class AFKListener implements Listener {
-
-    @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
-        if (AFKTask.isAfkTaskRunning(player)) {
-            player.setMetadata("lastMoveTime", new FixedMetadataValue(BedWars1058Addons.plugin, System.currentTimeMillis()));
-        }
-    }
+public class AfkListener implements Listener {
 
     @EventHandler
-    public void onGameStart(GameStateChangeEvent event) {
+    private void onGameStart(GameStateChangeEvent event) {
         if (event.getNewState() == GameState.playing) {
-            for (Player p : event.getArena().getPlayers()) {
-                p.setMetadata("lastMoveTime", new FixedMetadataValue(BedWars1058Addons.plugin, System.currentTimeMillis()));
-            }
-            AFKTask.startAFKCheck(event.getArena());
+            AfkTask.startKickTask(event.getArena().getWorld());
         }
     }
 
     @EventHandler
-    public void onRejoin(PlayerReJoinEvent event) {
-        Player player = event.getPlayer();
-        player.setMetadata("lastMoveTime", new FixedMetadataValue(BedWars1058Addons.plugin, System.currentTimeMillis()));
-    }
-
-    @EventHandler
-    public void onPlayerLeaveArena(PlayerLeaveArenaEvent event) {
-        Player player = event.getPlayer();
-        if (AFKTask.isAfkTaskRunning(player)) {
-            AFKTask.cancelAfkTask(player);
-            player.removeMetadata("lastMoveTime", BedWars1058Addons.plugin);
+    private void onGameEnd(GameEndEvent event) {
+        if (kickTasks.containsKey(event.getArena().getWorld())) {
+            AfkTask.cancelKickTask(event.getArena().getWorld());
         }
     }
 
     @EventHandler
-    public void onEnd(GameEndEvent event) {
-        for (Player p : event.getArena().getPlayers()) {
-            if (AFKTask.isAfkTaskRunning(p)) {
-                AFKTask.cancelAfkTask(p);
-            }
-            p.removeMetadata("lastMoveTime", BedWars1058Addons.plugin);
-        }
-        for (Player p : event.getArena().getSpectators()) {
-            if (AFKTask.isAfkTaskRunning(p)) {
-                AFKTask.cancelAfkTask(p);
-            }
-            p.removeMetadata("lastMoveTime", BedWars1058Addons.plugin);
-        }
+    private void onPlayerLeave(PlayerLeaveArenaEvent event) {
+        afkPlayers.remove(event.getPlayer().getUniqueId());
     }
 }
