@@ -33,7 +33,7 @@
             <artifactId>bedwars-api</artifactId>
             <version>23.3</version>
             <scope>system</scope>
-            <systemPath>${basedir}/Lib/bedwars-plugin-22.3.jar</systemPath>
+            <systemPath>${basedir}/Lib/bedwars-plugin-23.7-SNAPSHOT.jar</systemPath>
         </dependency>
     </dependencies>
 

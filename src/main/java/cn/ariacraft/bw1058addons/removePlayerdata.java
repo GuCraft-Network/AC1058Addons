@@ -7,7 +7,7 @@ import java.io.File;
 public class removePlayerdata {
 
     public static void remove() {
-        System.out.println("Deleteing PlayerData Files.Please Wait...");
+        System.out.println("Deleteing PlayerData Files. Please Wait...");
         File[] worlds = Bukkit.getWorldContainer().listFiles(File::isDirectory);
 
         if (worlds != null) {
@@ -25,7 +25,7 @@ public class removePlayerdata {
                     }
                 }
                 //Data
-                System.out.println("Deleteing Data Files.Please Wait...");
+                System.out.println("Deleteing Data Files. Please Wait...");
                 File dataFolder = new File(world, "data");
 
                 if (dataFolder.exists() && dataFolder.isDirectory()) {

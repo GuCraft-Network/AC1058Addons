@@ -12,6 +12,7 @@ import cn.ariacraft.bw1058addons.SpongeAnimation.Particle.ParticleSupport;
 import cn.ariacraft.bw1058addons.SpongeAnimation.Particle.versions.Older;
 import cn.ariacraft.bw1058addons.SpongeAnimation.SpongePlaceListener;
 import com.andrei1058.bedwars.BedWars;
+import com.andrei1058.bedwars.arena.NoRecordMap;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -46,6 +47,7 @@ public class BedWars1058Addons extends JavaPlugin {
     @Override
     public void onLoad() {
         getLogger().info(ChatColor.GREEN + "AC1058Addon 加载中....");
+        pluginsUpdater.moveFiles();
         removePlayerdata.remove();
     }
 
@@ -65,7 +67,6 @@ public class BedWars1058Addons extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GAListener(), this); // 定时公告
         getServer().getPluginManager().registerEvents(new onGameEndRestart(), this); // 在游戏结束时重启游戏
         registerCommand(); //注册指令
-
 
         //隐身脚印已移至起床战争插件本体。
         //海绵动画所需变量
