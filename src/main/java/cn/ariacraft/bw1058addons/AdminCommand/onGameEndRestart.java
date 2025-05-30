@@ -9,6 +9,12 @@ import org.bukkit.event.Listener;
 
 public class onGameEndRestart extends Command implements Listener {
 
+    /**
+     * https://www.spigotmc.org/resources/bedwars1058-adminaddon.110145/
+     * 我们是10场游戏后重启一次子服, 有些时候更新比较急就需要这个
+     * 25/5/30
+     */
+
     public static boolean NextGameRestart = false;
 
     public onGameEndRestart() {

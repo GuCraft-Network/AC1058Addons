@@ -12,6 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExplosionFix implements Listener {
+
+    /**
+     * 在当时的BedWars1058(23.7)中修复了TNT炸末地石, 但是火球还是可以
+     * 如果使用的修新版本可以修掉这个
+     * 25/5/30
+     */
     @EventHandler
     public void onExplodeEndStone(EntityExplodeEvent e) {
         if (e.getEntityType() == EntityType.FIREBALL) {

@@ -16,6 +16,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class LevelBar implements Listener {
 
+    /**
+     * 比较生草的方式 毕竟自用
+     * !e.getArena().getGroup().startsWith("ultimate_") 为了防止超能力插件的冷却会顶掉
+     * 25/5/30
+     */
     @EventHandler
     public void onGameStart(GameStateChangeEvent e) {
         if (e.getNewState().equals(GameState.playing) && !e.getArena().getGroup().startsWith("ultimate_")) {

@@ -11,6 +11,11 @@ import java.util.Map;
 
 public class GameAnnouncements {
 
+    /**
+     * 如弱智一般的游戏公告
+     * 25/5/30
+     */
+
     public static final String[] announcements = {
             "§c§l如果你断开连接，可以在起床大厅中使用/rejoin重新加入游戏。",
             "§c§l禁止队伍联合！使用/report举报违规队伍联合玩家。",
@@ -36,13 +41,13 @@ public class GameAnnouncements {
                     }
                     index[0] = (index[0] + 1) % announcements.length;
                     if (index[0] == 0) {
-                        index[0] = 1; // 如果已经发送完所有公告，则重新开始索引
+                        index[0] = 1;
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(BedWars1058Addons.plugin, 25L * 60, 25L * 60 * 2);
+        }.runTaskTimerAsynchronously(BedWars1058Addons.instance, 25L * 60, 25L * 60 * 2);
 
-        tasks.put(world, task); // 将任务添加到映射中，以备取消
+        tasks.put(world, task);
     }
 
     private static void sendAnnouncement(Player player, String announcement) {
@@ -53,7 +58,7 @@ public class GameAnnouncements {
         BukkitTask task = tasks.get(world);
         if (task != null) {
             task.cancel();
-            tasks.remove(world); // 从映射中删除已取消的任务
+            tasks.remove(world);
         }
     }
 
@@ -61,7 +66,7 @@ public class GameAnnouncements {
         for (BukkitTask task : tasks.values()) {
             task.cancel();
         }
-        tasks.clear(); // 清除所有任务
+        tasks.clear();
     }
 
 }

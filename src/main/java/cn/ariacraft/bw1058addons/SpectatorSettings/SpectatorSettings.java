@@ -29,13 +29,20 @@ public class SpectatorSettings extends Command implements Listener {
         super("specsettings");
     }
 
+    /**
+     * 没有补齐 比较懒了
+     * 应该是skid的@Starry_Killer
+     * 25/5/30
+     */
+
     @EventHandler
     public void onPlayerJoin(final PlayerJoinArenaEvent e) {
         final Player player = e.getPlayer();
         Data.nightVision.put(player, SettingsType.NIGHT_VISION_OFF);
         player.removePotionEffect(PotionEffectType.NIGHT_VISION);
-        player.setWalkSpeed(0.2f);
-        player.setFlySpeed(0.1f);
+        // 没有必要 - 25/5/30
+//        player.setWalkSpeed(0.2f);
+//        player.setFlySpeed(0.1f);
     }
 
     @EventHandler
@@ -43,8 +50,10 @@ public class SpectatorSettings extends Command implements Listener {
         final Player player = e.getPlayer();
         Data.nightVision.put(player, SettingsType.NIGHT_VISION_OFF);
         player.removePotionEffect(PotionEffectType.NIGHT_VISION);
-        player.setWalkSpeed(0.2f);
-        player.setFlySpeed(0.1f);
+
+        // 没有必要 - 25/5/30
+//        player.setWalkSpeed(0.2f);
+//        player.setFlySpeed(0.1f);
     }
 
     public void openMenu(final Player player) {

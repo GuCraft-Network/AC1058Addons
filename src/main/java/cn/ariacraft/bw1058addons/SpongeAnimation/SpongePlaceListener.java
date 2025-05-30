@@ -8,6 +8,11 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 public class SpongePlaceListener implements Listener {
 
+    /**
+     * 海绵动画
+     * 应该是skid的@Mher, 或公开组件
+     * 25/5/30
+     */
     @EventHandler
     public void onSpongePlace(BlockPlaceEvent e) {
         if (!e.isCancelled()) {

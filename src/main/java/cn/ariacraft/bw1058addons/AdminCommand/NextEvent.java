@@ -8,6 +8,12 @@ import org.bukkit.entity.Player;
 
 public class NextEvent extends Command {
 
+    /**
+     * https://www.spigotmc.org/resources/bedwars1058-adminaddon.110145/
+     * 顾名思义 切换事件
+     * 25/5/30
+     */
+
     public NextEvent() {
         super("nextevent");
     }

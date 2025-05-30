@@ -10,6 +10,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class SharpSwordFix implements Listener {
 
+    /**
+     * 修复: 丢弃剑后, 游戏会给予你一把木剑, 但是没有锋利
+     * 应该是skid的@Chem
+     * 25/5/30
+     */
     @EventHandler
     public void onSwordDrop(PlayerDropItemEvent event) {
         Material it = event.getItemDrop().getItemStack().getType();

@@ -17,6 +17,10 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class WaterWorkerHelmet implements Listener {
 
+    /**
+     * 水下速掘 头盔
+     * 25/5/30
+     */
     @EventHandler
     public void onGameStart(GameStateChangeEvent e) {
         if (e.getNewState().equals(GameState.playing)) {

@@ -8,6 +8,13 @@ import java.nio.file.StandardCopyOption;
 
 public class pluginsUpdater {
 
+
+    /**
+     * 如果服务器运行目录下存在/update文件夹 里面有文件就将其移动至plugins 但是无法移动文件夹
+     * 防止热更换导致游戏运行时出现NPE
+     * 25/5/30
+     */
+
     public static void moveFiles() {
         System.out.println("Checking for updates. Please Wait...");
         String serverDirectoryPath = System.getProperty("user.dir");

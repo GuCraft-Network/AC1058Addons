@@ -12,7 +12,6 @@ import cn.ariacraft.bw1058addons.SpongeAnimation.Particle.ParticleSupport;
 import cn.ariacraft.bw1058addons.SpongeAnimation.Particle.versions.Older;
 import cn.ariacraft.bw1058addons.SpongeAnimation.SpongePlaceListener;
 import com.andrei1058.bedwars.BedWars;
-import com.andrei1058.bedwars.arena.NoRecordMap;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -22,7 +21,6 @@ import java.util.Arrays;
 
 public class BedWars1058Addons extends JavaPlugin {
     public static BedWars1058Addons instance;
-    public static BedWars1058Addons plugin;
     //海绵动画所需变量
     private static String splash;
     private static String woodClick;
@@ -54,7 +52,6 @@ public class BedWars1058Addons extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        plugin = this;
         getLogger().info(ChatColor.LIGHT_PURPLE + "————————AriaCraft————————");
         getLogger().info(ChatColor.GREEN + "插件已启用");
         getLogger().info(ChatColor.LIGHT_PURPLE + "————————AriaCraft————————");
@@ -68,8 +65,8 @@ public class BedWars1058Addons extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new onGameEndRestart(), this); // 在游戏结束时重启游戏
         registerCommand(); //注册指令
 
-        //隐身脚印已移至起床战争插件本体。
-        //海绵动画所需变量
+        // 隐身脚印已移至起床战争插件本体。
+        // 海绵动画所需变量
         splash = BedWars.getForCurrentVersion("SPLASH", "ENTITY_PLAYER_SPLASH", "ENTITY_PLAYER_SPLASH");
         woodClick = BedWars.getForCurrentVersion("WOOD_CLICK", "BLOCK_WOOD_BUTTON_CLICK_ON", "BLOCK_WOODEN_BUTTON_CLICK_ON");
         ParticleSupport = new Older();

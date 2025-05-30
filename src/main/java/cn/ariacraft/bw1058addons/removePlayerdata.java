@@ -6,6 +6,11 @@ import java.io.File;
 
 public class removePlayerdata {
 
+    /**
+     * 建议使用: https://github.com/kamcio96/DisablePlayerData
+     * 25/5/30
+     */
+
     public static void remove() {
         System.out.println("Deleteing PlayerData Files. Please Wait...");
         File[] worlds = Bukkit.getWorldContainer().listFiles(File::isDirectory);

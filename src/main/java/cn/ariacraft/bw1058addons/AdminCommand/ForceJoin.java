@@ -9,6 +9,11 @@ import org.bukkit.entity.Player;
 
 public class ForceJoin extends Command {
 
+    /**
+     * https://www.spigotmc.org/resources/bedwars1058-adminaddon.110145/
+     * ForceJoin 好像没什么用
+     * 25/5/30
+     */
 
     public ForceJoin() {
         super("forcejoin");

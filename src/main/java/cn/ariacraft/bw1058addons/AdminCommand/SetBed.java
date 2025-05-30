@@ -10,6 +10,12 @@ import org.bukkit.entity.Player;
 
 public class SetBed extends Command {
 
+    /**
+     * https://www.spigotmc.org/resources/bedwars1058-adminaddon.110145/
+     * 顾名思义 设置床状态, 但是没有操作对应队伍的床方块
+     * 25/5/30
+     */
+
 
     public SetBed() {
         super("setbed");
